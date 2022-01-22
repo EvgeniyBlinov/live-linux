@@ -1,0 +1,57 @@
+#!/bin/sh
+
+#MIRROR_DEBIAN='ftp.ru.debian.org/debian/'
+MIRROR_DEBIAN='ftp.debian.org/debian/'
+#MIRROR_SECURITY=""
+#APT_PROXY="http://127.0.0.1:1234/"
+#APT_CACHER="${APT_PROXY}${MIRROR_DEBIAN}"
+
+DISTRIBUTION="buster"
+ARCH="amd64"
+MODE="debian"
+#BOOTAPPEND_LIVE="boot=live config persistence debug nosplash noautologin locales=ru_RU.UTF-8 keyboard-layouts=en timezone=Europe/Moscow"
+BOOTAPPEND_LIVE="boot=live config persistence debug nosplash noautologin locales=ru_RU.UTF-8 timezone=Europe/Moscow"
+#DEBOOTSTRAP_OPTIONS="--include=gnupg2,apt-utils,apt-transport-https,ca-certificates"
+## debian buster
+DEBOOTSTRAP_OPTIONS="--include=gnupg2,apt-utils,apt-transport-https,ca-certificates,dctrl-tools"
+
+set -e
+
+  #--apt-ftp-proxy "${APT_PROXY}" \
+  #--apt-http-proxy "${APT_PROXY}" \
+  #--mirror-binary "http://${MIRROR_DEBIAN}" \
+  #--mirror-binary-security "http://${MIRROR_SECURITY}" \
+  #--mirror-bootstrap "${APT_CACHER}" \
+  #--mirror-chroot "http://${MIRROR_DEBIAN}" \
+  #--mirror-chroot-security "http://${MIRROR_SECURITY}" \
+  #--parent-mirror-binary "http://${MIRROR_DEBIAN}" \
+  #--parent-mirror-binary-security "http://${MIRROR_SECURITY}" \
+  #--parent-mirror-bootstrap "${APT_CACHER}" \
+  #--parent-mirror-chroot "http://${MIRROR_DEBIAN}" \
+  #--parent-mirror-chroot-security "http://${MIRROR_SECURITY}" \
+lb config noauto                                    \
+  --apt-recommends true                             \
+  --architecture "${ARCH}"                          \
+  --archive-areas "main contrib non-free"           \
+  --backports true                                  \
+  --bootappend-live "${BOOTAPPEND_LIVE}"            \
+  --clean                                           \
+  --debian-installer live                           \
+  --debian-installer-distribution "${DISTRIBUTION}" \
+  --debootstrap-options "${DEBOOTSTRAP_OPTIONS}"    \
+  --debug true                                      \
+  --distribution "${DISTRIBUTION}"                  \
+  --firmware-binary true                            \
+  --firmware-chroot true                            \
+  --iso-publisher "CenT"                            \
+  --mode "${MODE}"                                  \
+  --updates true                                    \
+  --security true                                   \
+  --linux-packages "linux-image linux-headers"      \
+  --win32-loader true                               \
+  --verbose                                         \
+  --mirror-binary "https://${MIRROR_DEBIAN}"         \
+  --mirror-chroot "https://${MIRROR_DEBIAN}"         \
+  --parent-mirror-binary "https://${MIRROR_DEBIAN}"  \
+  --parent-mirror-chroot "https://${MIRROR_DEBIAN}"  \
+  ${@}

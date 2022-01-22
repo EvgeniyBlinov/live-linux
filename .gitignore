@@ -12,6 +12,7 @@ binary
 cache
 chroot
 config
+!auto/config
 includes.chroot
 
 .vagrant/
