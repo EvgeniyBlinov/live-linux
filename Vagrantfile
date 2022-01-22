@@ -1,6 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+######################  libvirt  #######################################
 ## apt update && apt install qemu libvirt-daemon-system libvirt-clients libxslt-dev libxml2-dev libvirt-dev zlib1g-dev ruby-dev ruby-libvirt ebtables dnsmasq-base
 ## vagrant plugin install vagrant-libvirt
 ## export VAGRANT_DEFAULT_PROVIDER=libvirt
@@ -10,9 +11,7 @@
 ## cp /bin/true /sbin/ip6tables
 ## apt install --reinstall iptables
 #
-#
-#
-#
+######################  virtualbox  ####################################
 ## sudo modprobe vboxdrv
 ## sudo modprobe vboxnetadp
 ## sudo vboxreload
@@ -23,9 +22,8 @@ hostname = Socket.gethostname
 localmachineip = IPSocket.getaddress(Socket.gethostname)
 puts %Q{ This machine has the IP '#{localmachineip} and host name '#{hostname}'}
 
-#box_name = 'generic/ubuntu2010'
 
-
+## @TODO
 ## apt update && apt-get install ifupdown -yqq
 box_name = 'ubuntu/focal64'
 
@@ -70,6 +68,5 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision "shell", path: "./vagrant-provision/vagrant-install-software.sh", run: "always"
   config.vm.provision "shell", path: "./vagrant-provision/live-linux-depends.sh", run: "always"
-  #config.vm.provision "shell", path: "./vagrant-provision/vagrant-every-start.sh", run: "always"
 
 end
