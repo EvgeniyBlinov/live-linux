@@ -11,12 +11,19 @@ chroot*
 binary
 cache
 chroot
-config
+#config
+config/bootstrap
+config/common
+config/source
+
 !auto/config
 includes.chroot
+
+config/includes.chroot_before_packages/root/passwd
 
 .vagrant/
 
 .builder/
 debootstrap-vagrant
 vagrant/
+.env

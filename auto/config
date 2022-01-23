@@ -1,5 +1,7 @@
 #!/bin/sh
 
+XARGS() { sed -ne '/#/d;s/ \t//g;H;${x;s/\n/ /g;s/^ //;p}'; }
+
 #MIRROR_DEBIAN='ftp.ru.debian.org/debian/'
 MIRROR_DEBIAN='ftp.debian.org/debian/'
 #MIRROR_SECURITY=""
@@ -9,11 +11,23 @@ MIRROR_DEBIAN='ftp.debian.org/debian/'
 DISTRIBUTION="buster"
 ARCH="amd64"
 MODE="debian"
-#BOOTAPPEND_LIVE="boot=live config persistence debug nosplash noautologin locales=ru_RU.UTF-8 keyboard-layouts=en timezone=Europe/Moscow"
-BOOTAPPEND_LIVE="boot=live config persistence debug nosplash noautologin locales=ru_RU.UTF-8 timezone=Europe/Moscow"
 #DEBOOTSTRAP_OPTIONS="--include=gnupg2,apt-utils,apt-transport-https,ca-certificates"
 ## debian buster
 DEBOOTSTRAP_OPTIONS="--include=gnupg2,apt-utils,apt-transport-https,ca-certificates,dctrl-tools"
+LB_INTERACTIVE='shell'
+
+LB_BOOTAPPEND_LIVE="$(XARGS <<eobp
+ boot=live
+ config
+ persistence
+ debug
+ nosplash
+ noautologin
+ locales=ru_RU.UTF-8
+ #keyboard-layouts=en
+ timezone=Europe/Moscow
+eobp
+)"
 
 set -e
 
@@ -29,12 +43,13 @@ set -e
   #--parent-mirror-bootstrap "${APT_CACHER}" \
   #--parent-mirror-chroot "http://${MIRROR_DEBIAN}" \
   #--parent-mirror-chroot-security "http://${MIRROR_SECURITY}" \
+  #--apt-options "--yes -oAcquire::Languages=none -oAcquire::PDiffs=false -oAPT::Install-Recommends=0 -oAPT::Install-Suggests=0 -oDpkg::Progress-Fancy=true" \
 lb config noauto                                    \
   --apt-recommends true                             \
   --architecture "${ARCH}"                          \
   --archive-areas "main contrib non-free"           \
   --backports true                                  \
-  --bootappend-live "${BOOTAPPEND_LIVE}"            \
+  --bootappend-live "${LB_BOOTAPPEND_LIVE}"         \
   --clean                                           \
   --debian-installer live                           \
   --debian-installer-distribution "${DISTRIBUTION}" \
@@ -43,6 +58,7 @@ lb config noauto                                    \
   --distribution "${DISTRIBUTION}"                  \
   --firmware-binary true                            \
   --firmware-chroot true                            \
+  --interactive "${LB_INTERACTIVE}"                 \
   --iso-publisher "CenT"                            \
   --mode "${MODE}"                                  \
   --updates true                                    \

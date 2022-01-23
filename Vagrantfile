@@ -67,6 +67,6 @@ Vagrant.configure(2) do |config|
   config.vm.synced_folder ".", "/vagrant/live-linux"
 
   config.vm.provision "shell", path: "./vagrant-provision/vagrant-install-software.sh", run: "always"
-  config.vm.provision "shell", path: "./vagrant-provision/live-linux-depends.sh", run: "always"
+  config.vm.provision "shell", path: "./vagrant-provision/vagrant-live-linux-depends.sh", run: "always"
 
 end

@@ -1,0 +1,5 @@
+cryptsetup
+cryptsetup-initramfs
+gnupg2
+grub2
+lvm2
