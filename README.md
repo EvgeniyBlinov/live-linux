@@ -1,3 +1,8 @@
+# live-linux
+
+Linux live-build debian based live with persistence for remote install by ssh.
+
+
 ### Vagrant add box
 
 ```
