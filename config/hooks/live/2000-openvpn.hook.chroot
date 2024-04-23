@@ -1,0 +1,8 @@
+#!/bin/sh
+
+systemctl enable openvpn
+
+## enable all openvpn configs
+find /etc/openvpn -type f -iname '*.conf' | \
+    xargs -n1 -I{} basename -s.conf {} | \
+    xargs -n1 -I{} systemctl enable openvpn@{}

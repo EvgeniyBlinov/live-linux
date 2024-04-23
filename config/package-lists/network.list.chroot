@@ -1,6 +1,5 @@
 bridge-utils
 conntrack
-dnsutils
 ethtool
 htop
 ifupdown
@@ -11,9 +10,8 @@ iptraf-ng
 iputils-arping
 iputils-ping
 iw
-make
 mc
-netcat
+netcat-openbsd
 net-tools
 telnet
 traceroute

@@ -1,4 +1,3 @@
-aptitude
 build-essential
 
 pass
@@ -18,3 +17,5 @@ pandoc
 vim
 tmux
 screen
+
+nginx

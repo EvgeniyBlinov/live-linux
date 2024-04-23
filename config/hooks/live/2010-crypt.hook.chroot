@@ -1,0 +1,10 @@
+#!/bin/sh
+
+grep '^dm-crypt' /etc/initramfs-tools/modules ||
+echo dm-crypt >> /etc/initramfs-tools/modules
+
+
+sed '/CRYPTSETUP=/s/^#//;s/=.*/=y/' -i /etc/cryptsetup-initramfs/conf-hook
+ln -s /etc/cryptsetup-initramfs/conf-hook /etc/initramfs-tools/hooks/cryptsetup
+
+live-update-initramfs -u

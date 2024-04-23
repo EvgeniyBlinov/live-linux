@@ -1,5 +1,3 @@
-live*
-chroot*
 *.img
 *.iso
 *.zsync
@@ -10,7 +8,7 @@ chroot*
 .build
 binary
 cache
-chroot
+chroot/
 #config
 config/bootstrap
 config/common

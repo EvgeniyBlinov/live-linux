@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -e
+
+logger "9999-my-fixups finished"

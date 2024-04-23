@@ -10,14 +10,16 @@ e2fsprogs
 less
 locales
 lshw
+make
 mdadm
 p7zip
 p7zip-full
 parted
 pciutils
-python-pygments
+python3-pygments
 rsync
 strace
+systemd-container
 tree
 tzdata
 usbutils

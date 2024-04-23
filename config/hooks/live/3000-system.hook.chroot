@@ -1,0 +1,4 @@
+#!/bin/sh
+
+systemctl enable rc-local.service
+systemctl start rc-local.service

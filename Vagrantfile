@@ -22,13 +22,9 @@ hostname = Socket.gethostname
 localmachineip = IPSocket.getaddress(Socket.gethostname)
 puts %Q{ This machine has the IP '#{localmachineip} and host name '#{hostname}'}
 
+box_name = 'debian/bullseye64'
 
-## @TODO
-## apt update && apt-get install ifupdown -yqq
-box_name = 'ubuntu/focal64'
-
-
-NETWORK_BASE = '10.7.7'
+NETWORK_BASE = '192.168.56'
 INTEGRATION_START_SEGMENT = 10
 
 Vagrant.configure(2) do |config|
@@ -39,9 +35,10 @@ Vagrant.configure(2) do |config|
     :ip => "#{NETWORK_BASE}.#{INTEGRATION_START_SEGMENT}",
     :libvirt__guest_ipv6 => "no"
   config.vm.hostname = 'linux'
+  config.vm.boot_timeout = 600
 
   config.vm.provider "virtualbox" do |v, override|
-    v.memory = 6144 # for tmpfs build
+    v.memory = 8192 # for tmpfs build
     v.cpus = 2
     override.vm.box = box_name
     provider_name = 'virtualbox'

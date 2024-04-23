@@ -1,9 +1,7 @@
 firmware-intel-sound
-firmware-intelwimax
 firmware-iwlwifi
 firmware-linux
 firmware-linux-free
-firmware-ralink
 firmware-realtek
 intel-microcode
 rfkill

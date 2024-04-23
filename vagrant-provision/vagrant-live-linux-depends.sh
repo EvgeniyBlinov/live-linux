@@ -10,9 +10,10 @@ if ! which lb ; then
     export LIVE_BUILD_SRC_PATH=~/live-build
     if ! test -d "${LIVE_BUILD_SRC_PATH}"; then
         echo "[Info] Install live-build"
-        GIT_CURL_VERBOSE=1 git clone --ipv4 https://salsa.debian.org/live-team/live-build.git ${LIVE_BUILD_SRC_PATH}
+        GIT_CURL_VERBOSE=1 git clone --ipv4 https://github.com/EvgeniyBlinov/live-build.git ${LIVE_BUILD_SRC_PATH}
         cd "${LIVE_BUILD_SRC_PATH}"
-        ## default: cannot stat 'manpages/fr/*'
+        git checkout blinov
+
         make test && ( make install || true )
     fi
 fi

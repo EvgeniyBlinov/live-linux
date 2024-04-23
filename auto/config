@@ -8,13 +8,12 @@ MIRROR_DEBIAN='ftp.debian.org/debian/'
 #APT_PROXY="http://127.0.0.1:1234/"
 #APT_CACHER="${APT_PROXY}${MIRROR_DEBIAN}"
 
-DISTRIBUTION="buster"
+DISTRIBUTION="bookworm"
 ARCH="amd64"
 MODE="debian"
-#DEBOOTSTRAP_OPTIONS="--include=gnupg2,apt-utils,apt-transport-https,ca-certificates"
-## debian buster
 DEBOOTSTRAP_OPTIONS="--include=gnupg2,apt-utils,apt-transport-https,ca-certificates,dctrl-tools"
-LB_INTERACTIVE='shell'
+#LB_INTERACTIVE='shell'
+LB_INTERACTIVE=false
 
 LB_BOOTAPPEND_LIVE="$(XARGS <<eobp
  boot=live
@@ -24,7 +23,7 @@ LB_BOOTAPPEND_LIVE="$(XARGS <<eobp
  nosplash
  noautologin
  locales=ru_RU.UTF-8
- #keyboard-layouts=en
+ keyboard-layouts=us,ru
  timezone=Europe/Moscow
 eobp
 )"
@@ -44,30 +43,33 @@ set -e
   #--parent-mirror-chroot "http://${MIRROR_DEBIAN}" \
   #--parent-mirror-chroot-security "http://${MIRROR_SECURITY}" \
   #--apt-options "--yes -oAcquire::Languages=none -oAcquire::PDiffs=false -oAPT::Install-Recommends=0 -oAPT::Install-Suggests=0 -oDpkg::Progress-Fancy=true" \
-lb config noauto                                    \
-  --apt-recommends true                             \
-  --architecture "${ARCH}"                          \
-  --archive-areas "main contrib non-free"           \
-  --backports true                                  \
-  --bootappend-live "${LB_BOOTAPPEND_LIVE}"         \
-  --clean                                           \
-  --debian-installer live                           \
-  --debian-installer-distribution "${DISTRIBUTION}" \
-  --debootstrap-options "${DEBOOTSTRAP_OPTIONS}"    \
-  --debug true                                      \
-  --distribution "${DISTRIBUTION}"                  \
-  --firmware-binary true                            \
-  --firmware-chroot true                            \
-  --interactive "${LB_INTERACTIVE}"                 \
-  --iso-publisher "CenT"                            \
-  --mode "${MODE}"                                  \
-  --updates true                                    \
-  --security true                                   \
-  --linux-packages "linux-image linux-headers"      \
-  --win32-loader true                               \
-  --verbose                                         \
-  --mirror-binary "https://${MIRROR_DEBIAN}"         \
-  --mirror-chroot "https://${MIRROR_DEBIAN}"         \
-  --parent-mirror-binary "https://${MIRROR_DEBIAN}"  \
-  --parent-mirror-chroot "https://${MIRROR_DEBIAN}"  \
-  ${@}
+  #--mirror-binary "https://${MIRROR_DEBIAN}"         \
+  #--mirror-chroot "https://${MIRROR_DEBIAN}"         \
+  #--parent-mirror-binary "https://${MIRROR_DEBIAN}"  \
+  #--parent-mirror-chroot "https://${MIRROR_DEBIAN}"  \
+lb config noauto                                            \
+  --apt-recommends true                                     \
+  --architecture "${ARCH}"                                  \
+  --archive-areas "main contrib non-free non-free-firmware" \
+  --backports true                                          \
+  --bootappend-live "${LB_BOOTAPPEND_LIVE}"                 \
+  --clean                                                   \
+  --debian-installer live                                   \
+  --debian-installer-distribution "${DISTRIBUTION}"         \
+  --debootstrap-options "${DEBOOTSTRAP_OPTIONS}"            \
+  --debug true                                              \
+  --distribution "${DISTRIBUTION}"                          \
+  --firmware-binary true                                    \
+  --firmware-chroot true                                    \
+  --interactive "${LB_INTERACTIVE}"                         \
+  --iso-publisher "CenT"                                    \
+  --mode "${MODE}"                                          \
+  --updates true                                            \
+  --security true                                           \
+  --linux-packages "linux-image linux-headers"              \
+  --loadlin false                                           \
+  --win32-loader true                                       \
+  --verbose                                                 \
+  --mirror-binary "https://${MIRROR_DEBIAN}"                \
+  --mirror-chroot "https://${MIRROR_DEBIAN}"                \
+  "${@}"

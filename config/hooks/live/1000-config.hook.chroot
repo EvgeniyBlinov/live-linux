@@ -1,0 +1,21 @@
+#!/bin/sh
+
+## root
+chown root:root -R /root
+chmod 0600 /root/.ssh/authorized_keys
+find /root/ -type d -exec chmod 0700 {} \;
+
+# set root password
+export LB_ROOT_PASSWORD="$(cat /root/passwd |tr -d '\n')"
+#echo "root:${LB_ROOT_PASSWORD}" | chpasswd --md5
+passwd <<EOF
+root
+${LB_ROOT_PASSWORD}
+EOF
+
+git clone https://github.com/EvgeniyBlinov/vim82 /root/.vim
+cd /root/.vim
+
+vim -c 'PlugInstall'
+
+ln -sr /root/.vim/.tmux.conf /root/.tmux.conf
