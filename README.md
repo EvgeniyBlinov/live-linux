@@ -47,22 +47,22 @@ sudo losetup -P $freeloop "$outputfile"
 
 sudo losetup -a
 
-mkfs -t ext4 -E nodiscard -L persistence $freeloop
+sudo mkfs -t ext4 -E nodiscard -L persistence $freeloop
 sync
 
 mkdir -p /mnt/usb
 
-mount $freeloop /mnt/usb
+sudo mount $freeloop /mnt/usb
 
-cat > /mnt/usb/persistence.conf <<-'EOF'
+sudo tee /mnt/usb/persistence.conf <<-'EOF'
 /etc link,source=etc
 /root link,source=root
 EOF
 
-mkdir /mnt/usb/{etc,root}
+sudo mkdir /mnt/usb/{etc,root}
 
-umount $freeloop
-losetup -d $freeloop
+sudo umount $freeloop
+sudo losetup -d $freeloop
 ```
 
 #### Ventoy example
